@@ -34,6 +34,8 @@ jobs:
         run: python setup.py install
       - name: Lint
         run: flake8 .
+      - name: Type checking
+        run: mypy .
       - name: Run tests
         run: |
           coverage run -m pytest
