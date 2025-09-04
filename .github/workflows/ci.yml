@@ -35,7 +35,7 @@ jobs:
       - name: Lint
         run: flake8 .
       - name: Type checking
-        run: mypy .
+        run: mypy . --exclude build/
       - name: Run tests
         run: |
           coverage run -m pytest
