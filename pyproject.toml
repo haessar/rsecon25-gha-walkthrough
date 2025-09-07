@@ -6,9 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "example-pkg-rsecon25"
 version = "0.0.1"
 description = "Toy demo package for RSECon25 CI/CD workshop"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = [
     "pybedtools",
+    "numpy==1.23",
 ]
 
 [tool.setuptools.packages.find]
