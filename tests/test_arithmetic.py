@@ -1,4 +1,4 @@
-from arithmetic.addition import sum_nested_ints
+from arithmetic.addition_0 import sum_nested_ints
 
 def test_sum_nested_ints():
     assert sum_nested_ints(1, 2) == 3
