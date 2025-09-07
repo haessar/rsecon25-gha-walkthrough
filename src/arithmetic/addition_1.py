@@ -8,7 +8,7 @@ def _flatten(arr, typ=int):
             yield from _flatten(x, typ)
 
 def sum_nested_ints(*args: int) -> int:
-    ints = np.fromiter(_flatten(args), dtype=np.int64)
-    if not np.isdtype(ints.dtype, np.integer):
+    ints = np.array(list(_flatten(args)))
+    if not np.isdtype(ints.dtype, np.int64):
         raise TypeError("Expected integer dtype")
     return ints.sum()
