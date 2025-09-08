@@ -1,16 +1,8 @@
-from typing import Union, Iterable
-
-import numpy as np
-
-def _flatten(arr, typ=int):
-    for x in arr:
-        if isinstance(x, typ):
-            yield x
+def sum_nested_ints(*args: int) -> int:
+    output = 0
+    for i in args:
+        if isinstance(i, int):
+            output += i
         else:
-            yield from _flatten(x, typ)
-
-def sum_nested_ints(*args: Union[Iterable, int]) -> int:
-    ints = np.array(list(_flatten(args)))
-    if not np.isdtype(ints.dtype, np.int64):
-        raise TypeError("Expected integer dtype")
-    return ints.sum()
+            output += sum_nested_ints(*i)
+    return output
