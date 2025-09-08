@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
     steps:
     - name: Check out code
       uses: actions/checkout@v4
@@ -21,7 +22,8 @@ jobs:
     - name: Build package
       run: python -m build
     - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@v1.10.3
+      uses: pypa/gh-action-pypi-publish@v1.13.0
       with:
+        user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
         verbose: true
