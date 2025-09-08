@@ -1,4 +1,5 @@
 # CI workflows
+Files with suffix `_X.<ext>` or `_XY.<ext>` throughout this repository correspond to lesson `X`, part `Y` as described below. For example, `.github/draft_workflows/ci_41.yml` is the first CI workflow for Lesson 4.
 
 ### Lesson 0 - Basic CI workflow
 Incrementally build a simple CI yaml for fixed python version (3.10)
