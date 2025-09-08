@@ -8,12 +8,12 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        # python-version: ["3.9", "3.10", "3.11", "3.12"]
-        python-version: ["3.9", "3.10"]
+        os: [ubuntu-latest, macos-latest]  # Add OS matrix
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Check out code 
         uses: actions/checkout@v4
@@ -22,23 +22,20 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
-      - name: Install dependencies
+      - name: Install dependencies and package
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
-        # pip install -r requirements-dev.txt -r requirements.txt
-        # sudo apt install -y bedtools
-      # - name: Cache APT Packages (Linux)
-      #   uses: awalsh128/cache-apt-pkgs-action@v1.4.3
-      #   with:
-      #     packages: bedtools
-      #     version: 1.0
-      - name: Install package
-        run: python setup.py install
+          python -m pip install --upgrade pip build
+          pip install .
+          pip install .[dev]
+      - name: Cache APT Packages (Linux)
+        uses: awalsh128/cache-apt-pkgs-action@v1.4.3
+        with:
+          packages: bedtools
+          version: 1.0
       - name: Lint
         run: flake8 .
-      # - name: Type checking
-      #   run: mypy . --exclude build/
+      - name: Type checking
+        run: mypy . --exclude build/ --exclude setup.py
       - name: Run tests
         run: |
           coverage run -m pytest

@@ -34,7 +34,7 @@ jobs:
       - name: Lint
         run: flake8 .
       - name: Type checking  # Add type checking with mypy
-        run: mypy . --exclude build/
+        run: mypy . --exclude build/ --exclude setup.py
       - name: Run tests
         run: |
           coverage run -m pytest

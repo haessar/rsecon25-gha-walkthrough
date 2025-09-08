@@ -1,2 +1,0 @@
-pybedtools
-numpy==1.23
