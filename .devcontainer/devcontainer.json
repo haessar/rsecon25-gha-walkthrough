@@ -14,7 +14,15 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip3 install --user -r requirements-dev.txt"
+	"postCreateCommand": "pip3 install --user -r requirements-dev.txt",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"matangover.mypy",
+				"ms-python.flake8"
+			]
+		}
+	}
 
 	// Configure tool-specific properties.
 	// "customizations": {},
