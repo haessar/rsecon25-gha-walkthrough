@@ -10,6 +10,10 @@ def _flatten(arr, typ=int):
             yield from _flatten(x, typ)
 
 def sum_nested_ints(*args: Union[Iterable, int]) -> int:
+    """
+    Calculate sum of all ints passed as args,
+    regardless of level of nesting
+    """
     ints = np.array(list(_flatten(args)))
     if not np.isdtype(ints.dtype, np.int64):
         raise TypeError("Expected integer dtype")

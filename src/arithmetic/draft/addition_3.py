@@ -1,6 +1,10 @@
 from typing import Union, Iterable
 
 def sum_nested_ints(*args: Union[Iterable, int]) -> int:
+    """
+    Calculate sum of all ints passed as args,
+    regardless of level of nesting
+    """
     output = 0
     for i in args:
         if isinstance(i, int):
