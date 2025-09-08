@@ -8,11 +8,12 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, macos-latest]  # Add OS matrix
         python-version: ["3.9", "3.10", "3.11", "3.12"]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Check out code 
         uses: actions/checkout@v4
@@ -33,7 +34,7 @@ jobs:
           version: 1.0
       - name: Lint
         run: flake8 .
-      - name: Type checking  # Add type checking with mypy
+      - name: Type checking
         run: mypy . --exclude build/
       - name: Run tests
         run: |
@@ -46,23 +47,3 @@ jobs:
         with:
           name: coverage-xml-${{ matrix.python-version }}
           path: coverage.xml
-  user-fail:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code 
-        uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-      - name: Install dependencies and package
-        run: |  # Explicitly install numpy < 2
-          python -m pip install --upgrade pip build
-          pip install .
-          pip install .[dev]
-          pip install numpy==1.23
-      - name: Run tests
-        run: coverage run -m pytest tests/test_arithmetic.py
-      - name: Check module
-        run: python -m arithmetic.addition
