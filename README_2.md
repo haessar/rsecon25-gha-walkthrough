@@ -9,7 +9,3 @@ On Linux systems, please install `bedtools` dependency as follows:
 ```
 sudo apt-get install bedtools
 ```
-On macOS, the same dependency should be installed with:
-```
-brew install bedtools
-```

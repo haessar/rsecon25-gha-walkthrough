@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]  # Add OS matrix
         python-version: ["3.9", "3.10", "3.11", "3.12"]
     runs-on: ${{ matrix.os }}
     steps:
@@ -28,16 +28,10 @@ jobs:
           pip install .
           pip install .[dev]
       - name: Cache APT Packages (Linux)
-        if: matrix.os == 'ubuntu-latest'
         uses: awalsh128/cache-apt-pkgs-action@v1.4.3
         with:
           packages: bedtools
           version: 1.0
-      - name: Install system packages (macOS)  # Add dependency installation for macOS
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew update
-          brew install bedtools
       - name: Lint
         run: flake8 .
       - name: Type checking

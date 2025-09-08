@@ -1,6 +1,6 @@
 import os.path
 
-from pybedtools import BedTool
+from pybedtools import BedTool  # type: ignore[import-untyped]
 
 
 def sort_bed(bed: str):

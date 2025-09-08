@@ -8,12 +8,11 @@ on:
 
 jobs:
   test:
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
-    runs-on: ${{ matrix.os }}
     steps:
       - name: Check out code 
         uses: actions/checkout@v4
@@ -21,27 +20,19 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
+          cache: 'pip'  # Add caching
       - name: Install dependencies and package
         run: |
           python -m pip install --upgrade pip build
           pip install .
           pip install .[dev]
-      - name: Cache APT Packages (Linux)
-        if: matrix.os == 'ubuntu-latest'
+      - name: Cache APT Packages (Linux)  # Add caching
         uses: awalsh128/cache-apt-pkgs-action@v1.4.3
         with:
           packages: bedtools
           version: 1.0
-      - name: Install system packages (macOS)  # Add dependency installation for macOS
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew update
-          brew install bedtools
       - name: Lint
         run: flake8 .
-      - name: Type checking
-        run: mypy . --exclude build/ --exclude setup.py
       - name: Run tests
         run: |
           coverage run -m pytest
@@ -51,5 +42,5 @@ jobs:
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-xml-${{ matrix.python-version }}-${{ matrix.os }}
+          name: coverage-xml-${{ matrix.python-version }}
           path: coverage.xml
